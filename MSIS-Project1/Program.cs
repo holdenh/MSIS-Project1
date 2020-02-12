@@ -38,7 +38,6 @@ namespace MSIS_Project1
                     break;
                 case "k":
                     break;
-                default :
             }
 
             return roundWinner;
