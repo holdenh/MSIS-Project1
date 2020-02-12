@@ -26,14 +26,19 @@ namespace MSIS_Project1
 
             /* variables. */
             bool stillPlaying = true;
+            string[] options = { "r", "p", "s", "l", "k" };
             string uSelection;
-            
+            string cSelection;
+            Random rand = new Random();
 
             /* play game */
             while (stillPlaying)
             {
+                /* take user and computer selections */
                 uSelection = getUserSelection();
-                Console.WriteLine("Player plays {0}\n\n", uSelection);
+                Console.WriteLine("Player plays {0}", uSelection);
+                cSelection = options[rand.Next(0, options.Length)];
+                Console.WriteLine("Computer plays {0}\n\n", cSelection);
 
                 /* Ask if play want to retry. */
                 Console.Write("Play again? : ");
