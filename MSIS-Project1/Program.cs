@@ -20,6 +20,29 @@ namespace MSIS_Project1
             }
             return selection;
         }
+        /* method that will take two string parameters, and will return the string word "player" or "comp" */
+        public static string getRoundWinner(string uSelection, string cSelection)
+        {
+            string roundWinner = "";
+
+            /* game logic */
+            switch (uSelection.ToLower())
+            {
+                case "p":
+                    break;
+                case "r":
+                    break;
+                case "s":
+                    break;
+                case "l":
+                    break;
+                case "k":
+                    break;
+                default :
+            }
+
+            return roundWinner;
+        }
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
@@ -39,6 +62,9 @@ namespace MSIS_Project1
                 Console.WriteLine("Player plays {0}", uSelection);
                 cSelection = options[rand.Next(0, options.Length)];
                 Console.WriteLine("Computer plays {0}\n\n", cSelection);
+
+                /* find the winner of the round, given the selections. */
+                string winner = getRoundWinner(uSelection, cSelection);
 
                 /* Ask if play want to retry. */
                 Console.Write("Play again? : ");
