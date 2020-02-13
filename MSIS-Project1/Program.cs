@@ -11,12 +11,32 @@ namespace MSIS_Project1
             /* take user input */
             Console.Write("(r)ock, (p)aper, (s)cissors, (l)izard, or spoc(k) : ");
             selection = Console.ReadLine();
-
             /* test whether user input is valid, if not retry user entry. */
             if (selection.ToLower() != "r" && selection.ToLower() != "p" && selection.ToLower() != "s" && selection.ToLower() != "l" 
                && selection.ToLower() != "k")
             {
-                getUserSelection();
+                selection = getUserSelection();
+            }
+            /* if valid, transplate input to full word selection. */
+            if (selection == "r")
+            {
+                selection = "rock";
+            }
+            else if (selection == "p")
+            {
+                selection = "paper";
+            }
+            else if (selection == "s")
+            {
+                selection = "scissors";
+            }
+            else if (selection == "l")
+            {
+                selection = "lizard";
+            }
+            else
+            {
+                selection = "spock";
             }
             return selection;
         }
@@ -24,19 +44,89 @@ namespace MSIS_Project1
         public static string getRoundWinner(string uSelection, string cSelection)
         {
             string roundWinner = "";
-
+            string compSelectionLower = cSelection.ToLower();
             /* game logic */
             switch (uSelection.ToLower())
             {
-                case "p":
+                /* Rock beats Scissors/Lizard, and loses to Paper/Spock. */
+                case "rock":
+                    /* check for winner. */
+                    if (compSelectionLower == "scissors" || compSelectionLower == "lizard")
+                    {
+                        roundWinner = "Player";
+                    }
+                    else if (compSelectionLower == uSelection.ToLower())
+                    {
+                        roundWinner = "tie";
+                    }
+                    else
+                    { /* player lost round. */
+                        roundWinner = "Computer";
+                    }
                     break;
-                case "r":
+                /* Paper beats Rock/Spock, and loses to Scissors/Lizard */
+                case "paper":
+                    /* check for winner. */
+                    if (compSelectionLower == "rock" || compSelectionLower == "spock")
+                    {
+                        roundWinner = "Player";
+                    }
+                    else if (compSelectionLower == uSelection.ToLower())
+                    {
+                        roundWinner = "tie";
+                    }
+                    else
+                    { /* player lost round. */
+                        roundWinner = "Computer";
+                    }
                     break;
-                case "s":
+                /* Scissors beats Paper/Lizard, and loses to Rock/Spock */
+                case "scissors":
+                    /* check for winner. */
+                    if (compSelectionLower == "paper" || compSelectionLower == "lizard")
+                    {
+                        roundWinner = "Player";
+                    }
+                    else if (compSelectionLower == uSelection.ToLower())
+                    {
+                        roundWinner = "tie";
+                    }
+                    else
+                    { /* player lost round. */
+                        roundWinner = "Computer";
+                    }
                     break;
-                case "l":
+                /* Lizard beats Paper/Spock, and loses to Rock/Scissors */
+                case "lizard":
+                    /* check for winner. */
+                    if (compSelectionLower == "paper" || compSelectionLower == "spock")
+                    {
+                        roundWinner = "Player";
+                    }
+                    else if (compSelectionLower == uSelection.ToLower())
+                    {
+                        roundWinner = "tie";
+                    }
+                    else
+                    { /* player lost round. */
+                        roundWinner = "Computer";
+                    }
                     break;
-                case "k":
+                /* Spockj beats Rock/Scissors, and loses to Paper/Lizard */
+                case "spock":
+                    /* check for winner. */
+                    if (compSelectionLower == "rock" || compSelectionLower == "scissors")
+                    {
+                        roundWinner = "Player";
+                    }
+                    else if (compSelectionLower == uSelection.ToLower())
+                    {
+                        roundWinner = "tie";
+                    }
+                    else
+                    { /* player lost round. */
+                        roundWinner = "Computer";
+                    }
                     break;
             }
 
@@ -47,30 +137,54 @@ namespace MSIS_Project1
             Console.WriteLine("Hello World!");
 
             /* variables. */
-            bool stillPlaying = true;
-            string[] options = { "r", "p", "s", "l", "k" };
+            bool quit = false;
+            string[] selections = { "rock", "paper", "scissors", "lizard", "spock" };
             string uSelection;
             string cSelection;
+            int playerWins;
+            int compWins; 
             Random rand = new Random();
 
             /* play game */
-            while (stillPlaying)
+            while (!quit)
             {
+                Console.WriteLine("ROCK PAPER SCISSOR LIZARD SPOCK!\n");
                 /* take user and computer selections */
+                playerWins = 0;
+                compWins = 0;
                 uSelection = getUserSelection();
-                Console.WriteLine("Player plays {0}", uSelection);
-                cSelection = options[rand.Next(0, options.Length)];
-                Console.WriteLine("Computer plays {0}\n\n", cSelection);
+                cSelection = selections[rand.Next(0, selections.Length)];
 
-                /* find the winner of the round, given the selections. */
+                /* find the winner of the round, and add the round point. */
                 string winner = getRoundWinner(uSelection, cSelection);
+                Console.WriteLine("You played {0}. Computer played {1}.", uSelection, cSelection);
+                if (winner == "tie")
+                {
+                    Console.WriteLine("This line was a tie.");
+                    continue;
+                } 
+                else if (winner == "Player")
+                {
+                    playerWins++;
+                } 
+                else
+                {
+                    compWins++;
+                }
+
+                /* get full selection, and print output. */
+                Console.WriteLine(winner + " wins!");
 
                 /* Ask if play want to retry. */
-                Console.Write("Play again? : ");
+                Console.Write("Play again(y/Y or anything else for no.)? : ");
                 string retry = Console.ReadLine();
-                if (retry != "y" && retry != "Y")
+                if (retry == "y" || retry == "Y")
                 {
-                    stillPlaying = false;
+                    Console.Clear();
+                } 
+                else
+                {
+                    quit = true;
                 }
             }
         }
