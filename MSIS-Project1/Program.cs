@@ -142,39 +142,48 @@ namespace MSIS_Project1
             string uSelection;
             string cSelection;
             int playerWins;
-            int compWins; 
+            int compWins;
+            int currentRound;
             Random rand = new Random();
 
             /* play game */
             while (!quit)
             {
-                Console.WriteLine("ROCK PAPER SCISSOR LIZARD SPOCK!\n");
-                /* take user and computer selections */
-                playerWins = 0;
-                compWins = 0;
-                uSelection = getUserSelection();
-                cSelection = selections[rand.Next(0, selections.Length)];
+                /* Ask user for number of rounds. */
+                Console.Write("WELCOME TO ROCK PAPER SCISSOR LIZARD SPOCK!\n\n Would you like to play a best of (1)one, (3)three, or (5)five? : ");
+                int numRounds = Convert.ToInt32(Console.ReadLine());
+                currentRound = 0;
+                Console.Clear();
+                while (currentRound < numRounds)
+                {
+                    /* take user and computer selections */
+                    playerWins = 0;
+                    compWins = 0;
+                    Console.WriteLine("ROUND {0}!\n", currentRound + 1);
+                    uSelection = getUserSelection();
+                    cSelection = selections[rand.Next(0, selections.Length)];
 
-                /* find the winner of the round, and add the round point. */
-                string winner = getRoundWinner(uSelection, cSelection);
-                Console.WriteLine("You played {0}. Computer played {1}.", uSelection, cSelection);
-                if (winner == "tie")
-                {
-                    Console.WriteLine("This line was a tie.");
-                    continue;
-                } 
-                else if (winner == "Player")
-                {
-                    playerWins++;
-                } 
-                else
-                {
-                    compWins++;
+                    /* find the winner of the round, and add the round point. */
+                    string winner = getRoundWinner(uSelection, cSelection);
+                    Console.WriteLine("You played {0}. Computer played {1}.", uSelection, cSelection);
+                    if (winner == "tie")
+                    {
+                        Console.WriteLine("This line was a tie.");
+                        continue;
+                    }
+                    else if (winner == "Player")
+                    {
+                        playerWins++;
+                    }
+                    else
+                    {
+                        compWins++;
+                    }
+
+                    /* print output and increment round. */
+                    Console.WriteLine(winner + " wins round {0}!", currentRound+1);
+                    currentRound++;
                 }
-
-                /* get full selection, and print output. */
-                Console.WriteLine(winner + " wins!");
-
                 /* Ask if play want to retry. */
                 Console.Write("Play again(y/Y or anything else for no.)? : ");
                 string retry = Console.ReadLine();
