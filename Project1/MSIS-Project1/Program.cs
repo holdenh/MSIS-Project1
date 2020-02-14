@@ -8,7 +8,7 @@ namespace MSIS_Project1
         public static int getRoundLimit()
         {
             int limit = 1;
-            Console.Write("Would you like to play a best of(1)one, (3)three, or(5)five ? : ");
+            Console.Write("Would you like to play a best of (1) one, (3)three, or(5)five ? : ");
             limit = Convert.ToInt32(Console.ReadLine());
 
             /* check if input is a 1, 3, or 5. If not retry user input. */
@@ -51,6 +51,7 @@ namespace MSIS_Project1
             if (selection.ToLower() != "r" && selection.ToLower() != "p" && selection.ToLower() != "s" && selection.ToLower() != "l"
                && selection.ToLower() != "k")
             {
+                Console.WriteLine("Invalid input. Please try again.");
                 selection = getUserSelection();
             }
             /* if valid, transplate input to full word selection. */
@@ -171,8 +172,6 @@ namespace MSIS_Project1
         }
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
             /* variables. */
             bool quit = false;
             string[] selections = { "rock", "paper", "scissors", "lizard", "spock" };
