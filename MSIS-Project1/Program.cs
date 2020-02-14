@@ -208,7 +208,7 @@ namespace MSIS_Project1
                     Console.WriteLine("You played {0}. Computer played {1}.", uSelection, cSelection);
                     if (winner == "tie")
                     {
-                        Console.WriteLine("This line was a tie.");
+                        Console.WriteLine("This round was a tie.");
                         continue;
                     }
                     else if (winner == "Player")
@@ -224,7 +224,7 @@ namespace MSIS_Project1
                     }
 
                     /* print output and increment round. */
-                    Console.WriteLine(winner + " wins round {0}!", currentRound + 1);
+                    Console.WriteLine(winner + " wins round {0}!\n", currentRound + 1);
                     currentRound++;
                     /* check if the win limit as been reached. */
                     if (playerWins == winLimit && currentRound != numRounds)
