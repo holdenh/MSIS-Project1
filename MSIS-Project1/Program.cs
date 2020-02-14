@@ -4,6 +4,43 @@ namespace MSIS_Project1
 {
     class Program
     {
+        /* method that will ask user for input about the number of roudns. */
+        public static int getRoundLimit()
+        {
+            int limit = 1;
+
+            Console.Write("Would you like to play a best of(1)one, (3)three, or(5)five ? : ");
+            limit = Convert.ToInt32(Console.ReadLine());
+
+            /* check if input is a 1, 3, or 5. If not retry user input. */
+            if (limit != 1 && limit != 3 && limit != 5)
+            {
+                Console.WriteLine("Invalid input please try again.");
+                limit = getRoundLimit();
+            }
+
+            return limit;
+        } 
+        /* method that will take a given number of rounds, and return the number of rounds needed to win in a best of match of that number. */
+        public static int setWinLimit(int num)
+        {
+            int limit = 0;
+            /* set the value of limit based on the different possible values of the number passed in.  */
+            switch(num)
+            {
+                case 1:
+                    limit = 1;
+                    break;
+                case 3:
+                    limit = 2;
+                    break;
+                case 5:
+                    limit = 3;
+                    break;
+            }
+
+            return limit;
+        }
         /* method that asks user for input, and returns a string */
         public static string getUserSelection()
         {
@@ -143,22 +180,26 @@ namespace MSIS_Project1
             string cSelection;
             int playerWins;
             int compWins;
+            int numRounds;
             int currentRound;
+            int winLimit;
             Random rand = new Random();
 
             /* play game */
             while (!quit)
             {
-                /* Ask user for number of rounds. */
-                Console.Write("WELCOME TO ROCK PAPER SCISSOR LIZARD SPOCK!\n\n Would you like to play a best of (1)one, (3)three, or (5)five? : ");
-                int numRounds = Convert.ToInt32(Console.ReadLine());
+                playerWins = 0;
+                compWins = 0;
+                numRounds = 0;
                 currentRound = 0;
+                /* Ask user for number of rounds. */
+                Console.Write("WELCOME TO ROCK PAPER SCISSOR LIZARD SPOCK!\n\n ");
+                numRounds = getRoundLimit();
+                winLimit = setWinLimit(numRounds);
                 Console.Clear();
                 while (currentRound < numRounds)
                 {
                     /* take user and computer selections */
-                    playerWins = 0;
-                    compWins = 0;
                     Console.WriteLine("ROUND {0}!\n", currentRound + 1);
                     uSelection = getUserSelection();
                     cSelection = selections[rand.Next(0, selections.Length)];
@@ -173,16 +214,29 @@ namespace MSIS_Project1
                     }
                     else if (winner == "Player")
                     {
+                        /* increment player win count */
                         playerWins++;
                     }
                     else
                     {
-                        compWins++;
+                        /* increment computer win count */
+                        compWins++;  
                     }
 
                     /* print output and increment round. */
                     Console.WriteLine(winner + " wins round {0}!", currentRound+1);
                     currentRound++;
+                    /* check if the win limit as been reached. */
+                    if (playerWins == winLimit && currentRound != numRounds)
+                    {
+                        Console.WriteLine("Player has won {0} out of {1} rounds. No need to play to {2}.", playerWins, currentRound, numRounds);
+                        break;
+                    } 
+                    else if (compWins == winLimit && currentRound != numRounds)
+                    {
+                        Console.WriteLine("Computer has won {0} out of {1} rounds. No need to play to {2}.", compWins, currentRound, numRounds);
+                        break;
+                    }
                 }
                 /* Ask if play want to retry. */
                 Console.Write("Play again(y/Y or anything else for no.)? : ");
