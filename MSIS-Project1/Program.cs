@@ -8,7 +8,6 @@ namespace MSIS_Project1
         public static int getRoundLimit()
         {
             int limit = 1;
-
             Console.Write("Would you like to play a best of(1)one, (3)three, or(5)five ? : ");
             limit = Convert.ToInt32(Console.ReadLine());
 
@@ -20,13 +19,13 @@ namespace MSIS_Project1
             }
 
             return limit;
-        } 
+        }
         /* method that will take a given number of rounds, and return the number of rounds needed to win in a best of match of that number. */
         public static int setWinLimit(int num)
         {
             int limit = 0;
             /* set the value of limit based on the different possible values of the number passed in.  */
-            switch(num)
+            switch (num)
             {
                 case 1:
                     limit = 1;
@@ -49,7 +48,7 @@ namespace MSIS_Project1
             Console.Write("(r)ock, (p)aper, (s)cissors, (l)izard, or spoc(k) : ");
             selection = Console.ReadLine();
             /* test whether user input is valid, if not retry user entry. */
-            if (selection.ToLower() != "r" && selection.ToLower() != "p" && selection.ToLower() != "s" && selection.ToLower() != "l" 
+            if (selection.ToLower() != "r" && selection.ToLower() != "p" && selection.ToLower() != "s" && selection.ToLower() != "l"
                && selection.ToLower() != "k")
             {
                 selection = getUserSelection();
@@ -75,6 +74,7 @@ namespace MSIS_Project1
             {
                 selection = "spock";
             }
+
             return selection;
         }
         /* method that will take two string parameters, and will return the string word "player" or "comp" */
@@ -203,7 +203,6 @@ namespace MSIS_Project1
                     Console.WriteLine("ROUND {0}!\n", currentRound + 1);
                     uSelection = getUserSelection();
                     cSelection = selections[rand.Next(0, selections.Length)];
-
                     /* find the winner of the round, and add the round point. */
                     string winner = getRoundWinner(uSelection, cSelection);
                     Console.WriteLine("You played {0}. Computer played {1}.", uSelection, cSelection);
@@ -213,6 +212,7 @@ namespace MSIS_Project1
                         continue;
                     }
                     else if (winner == "Player")
+
                     {
                         /* increment player win count */
                         playerWins++;
@@ -220,18 +220,18 @@ namespace MSIS_Project1
                     else
                     {
                         /* increment computer win count */
-                        compWins++;  
+                        compWins++;
                     }
 
                     /* print output and increment round. */
-                    Console.WriteLine(winner + " wins round {0}!", currentRound+1);
+                    Console.WriteLine(winner + " wins round {0}!", currentRound + 1);
                     currentRound++;
                     /* check if the win limit as been reached. */
                     if (playerWins == winLimit && currentRound != numRounds)
                     {
                         Console.WriteLine("Player has won {0} out of {1} rounds. No need to play to {2}.", playerWins, currentRound, numRounds);
                         break;
-                    } 
+                    }
                     else if (compWins == winLimit && currentRound != numRounds)
                     {
                         Console.WriteLine("Computer has won {0} out of {1} rounds. No need to play to {2}.", compWins, currentRound, numRounds);
@@ -244,7 +244,7 @@ namespace MSIS_Project1
                 if (retry == "y" || retry == "Y")
                 {
                     Console.Clear();
-                } 
+                }
                 else
                 {
                     quit = true;
