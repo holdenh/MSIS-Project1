@@ -193,14 +193,14 @@ namespace MSIS_Project1
                 numRounds = 0;
                 currentRound = 0;
                 /* Ask user for number of rounds. */
-                Console.Write("WELCOME TO ROCK PAPER SCISSOR LIZARD SPOCK!\n\n ");
+                Console.Write("WELCOME TO ROCK PAPER SCISSOR LIZARD SPOCK!\n\n");
                 numRounds = getRoundLimit();
                 winLimit = setWinLimit(numRounds);
                 Console.Clear();
                 while (currentRound < numRounds)
                 {
                     /* take user and computer selections */
-                    Console.WriteLine("ROUND {0}!\n", currentRound + 1);
+                    Console.WriteLine("ROUND {0} of {1}!\n", currentRound + 1, numRounds);
                     uSelection = getUserSelection();
                     cSelection = selections[rand.Next(0, selections.Length)];
                     /* find the winner of the round, and add the round point. */
@@ -208,7 +208,7 @@ namespace MSIS_Project1
                     Console.WriteLine("You played {0}. Computer played {1}.", uSelection, cSelection);
                     if (winner == "tie")
                     {
-                        Console.WriteLine("This round was a tie.");
+                        Console.WriteLine("This round was a tie.\n");
                         continue;
                     }
                     else if (winner == "Player")
@@ -224,7 +224,8 @@ namespace MSIS_Project1
                     }
 
                     /* print output and increment round. */
-                    Console.WriteLine(winner + " wins round {0}!\n", currentRound + 1);
+                    Console.WriteLine(winner + " wins round {0}!", currentRound + 1);
+                    Console.WriteLine("CURRENT SCORE \n\tPLAYER: {0}  COMPUTER: {1}\n", playerWins, compWins);
                     currentRound++;
                     /* check if the win limit as been reached. */
                     if (playerWins == winLimit && currentRound != numRounds)
@@ -236,10 +237,10 @@ namespace MSIS_Project1
                     {
                         Console.WriteLine("Computer has won {0} out of {1} rounds. No need to play to {2}.", compWins, currentRound, numRounds);
                         break;
-                    }
+                    } 
                 }
                 /* Ask if play want to retry. */
-                Console.Write("Play again(y/Y or anything else for no.)? : ");
+                Console.Write("\nPlay again(y/Y or anything else for no.)? : ");
                 string retry = Console.ReadLine();
                 if (retry == "y" || retry == "Y")
                 {
