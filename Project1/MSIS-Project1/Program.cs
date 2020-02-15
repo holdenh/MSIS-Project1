@@ -8,7 +8,7 @@ namespace MSIS_Project1
         public static int getRoundLimit()
         {
             int limit = 1;
-            Console.Write("Would you like to play a best of (1) one, (3)three, or(5)five ? : ");
+            Console.Write("Would you like to play a best of (1) one, (3)three, or (5)five ? : ");
             limit = Convert.ToInt32(Console.ReadLine());
 
             /* check if input is a 1, 3, or 5. If not retry user input. */
@@ -226,7 +226,7 @@ namespace MSIS_Project1
                     Console.WriteLine(winner + " wins round {0}!", currentRound + 1);
                     Console.WriteLine("CURRENT SCORE \n\tPLAYER: {0}  COMPUTER: {1}\n", playerWins, compWins);
                     currentRound++;
-                    /* check if the win limit as been reached. */
+                    /* check if the win limit as been reached, if the last round was just played. Then display the winner of the Match. */
                     if (playerWins == winLimit && currentRound != numRounds)
                     {
                         Console.WriteLine("Player has won {0} out of {1} rounds. No need to play to {2}.", playerWins, currentRound, numRounds);
@@ -236,7 +236,18 @@ namespace MSIS_Project1
                     {
                         Console.WriteLine("Computer has won {0} out of {1} rounds. No need to play to {2}.", compWins, currentRound, numRounds);
                         break;
-                    } 
+                    }
+                    else if (currentRound == numRounds)
+                    {   /* Compare will return a 1 if the player has won, and -1 if comp has won. There can be no 0 (tie). */
+                        if (playerWins.CompareTo(compWins) == 1)
+                        {
+                            Console.WriteLine("COGRATULATIONS, YOU HAVE BEAT THE COMPUTER!!!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Thats too bad, the computer won...");
+                        }
+                    }
                 }
                 /* Ask if play want to retry. */
                 Console.Write("\nPlay again(y/Y or anything else for no.)? : ");
