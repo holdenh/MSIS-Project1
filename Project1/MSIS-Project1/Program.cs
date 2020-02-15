@@ -243,7 +243,7 @@ namespace MSIS_Project1
                     }
                     else if (compWins == winLimit && currentRound != numRounds)
                     {
-                        Console.WriteLine("Computer has won {0} out of {1} rounds. No need to play to {2}.", compWins, currentRound, numRounds);
+                        Console.WriteLine("Computer has won {0} out of {1} rounds. No need to play to round {2}.", compWins, currentRound, numRounds);
                         break;
                     }
                     else if (currentRound == numRounds)
