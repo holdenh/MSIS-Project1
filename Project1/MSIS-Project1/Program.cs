@@ -215,7 +215,8 @@ namespace MSIS_Project1
                     Console.WriteLine("You played {0}. Computer played {1}.", uSelection, cSelection);
                     if (winner == "tie")
                     {
-                        Console.WriteLine("This round was a tie.\n");
+                        Console.WriteLine("This round was a tie.");
+                        Console.WriteLine("CURRENT SCORE \n\tPLAYER: {0}  COMPUTER: {1}\n", playerWins, compWins);
                         continue;
                     }
                     else if (winner == "Player")
