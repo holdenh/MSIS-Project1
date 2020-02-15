@@ -9,12 +9,20 @@ namespace MSIS_Project1
         {
             int limit = 1;
             Console.Write("Would you like to play a best of (1) one, (3)three, or (5)five ? : ");
-            limit = Convert.ToInt32(Console.ReadLine());
-
-            /* check if input is a 1, 3, or 5. If not retry user input. */
-            if (limit != 1 && limit != 3 && limit != 5)
+            try 
             {
-                Console.WriteLine("Invalid input please try again.");
+                limit = Convert.ToInt32(Console.ReadLine());
+
+                /* check if input is a 1, 3, or 5. If not retry user input. */
+                if (limit != 1 && limit != 3 && limit != 5)
+                {
+                    Console.WriteLine("Invalid input. Please try again.");
+                    limit = getRoundLimit();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Invalid input. Please try again.");
                 limit = getRoundLimit();
             }
 
