@@ -1,4 +1,20 @@
 ﻿using System;
+/*
+ *      Holden Halferty
+ *      MSIS2203 - Project 1
+ *      
+ *      A best of one, three, or five round(s) game called Rock, Paper, Scissors, Lizard, Spock.
+ *      
+ *      Game Rules : 
+ *          1. Rock crushes Scissors or Lizard.
+ *          2. Scissors cut Paper or decapitates Lizard.
+ *          3. Paper covers Rock or disproves Spock.
+ *          4. Lizard eats Paper or poisons Spock.
+ *          5. Spock vaporizes Rock or smashes Scissors.
+ *          6. Reroll on tie.
+ * 
+*/
+
 
 namespace MSIS_Project1
 {
@@ -199,8 +215,16 @@ namespace MSIS_Project1
                 compWins = 0;
                 numRounds = 0;
                 currentRound = 0;
+                /* Display game rules. */
+                Console.WriteLine("WELCOME TO ROCK PAPER SCISSOR LIZARD SPOCK!\n");
+                Console.WriteLine("Game Rules :\n" 
+                                        + "\t1.Rock crushes Scissors or Lizard.\n"
+                                        + "\t2.Scissors cut Paper or decapitates Lizard.\n"
+                                        + "\t3.Paper covers Rock or disproves Spock.\n"
+                                        + "\t4.Lizard eats Paper or poisons Spock. \n"
+                                        + "\t5.Spock vaporizes Rock or smashes Scissors.\n" 
+                                        + "\t6.Reroll on tie.\n\n");
                 /* Ask user for number of rounds. */
-                Console.Write("WELCOME TO ROCK PAPER SCISSOR LIZARD SPOCK!\n\n");
                 numRounds = getRoundLimit();
                 winLimit = setWinLimit(numRounds);
                 Console.Clear();
