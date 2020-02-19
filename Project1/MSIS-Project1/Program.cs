@@ -235,8 +235,8 @@ namespace MSIS_Project1
                     uSelection = getUserSelection();
                     cSelection = selections[rand.Next(0, selections.Length)];
                     /* find the winner of the round, and add the round point. */
+                    Console.WriteLine("\tYou played {0}. Computer played {1}.", uSelection, cSelection);
                     string winner = getRoundWinner(uSelection, cSelection);
-                    Console.WriteLine("\tYou played {0}. Computer played {1}.\n", uSelection, cSelection);
                     if (winner == "tie")
                     {
                         Console.WriteLine("This round was a tie.");
@@ -262,23 +262,23 @@ namespace MSIS_Project1
                     /* check if the win limit as been reached, if the last round was just played. Then display the winner of the Match. */
                     if (playerWins == winLimit && currentRound != numRounds)
                     {
-                        Console.WriteLine("Player has won {0} out of {1} rounds. No need to play to {2}.", playerWins, currentRound, numRounds);
+                        Console.WriteLine("The Player has already won {0} out of {1} rounds, and is automatically declared the winner.", playerWins, numRounds);
                         break;
                     }
                     else if (compWins == winLimit && currentRound != numRounds)
                     {
-                        Console.WriteLine("Computer has won {0} out of {1} rounds. No need to play to round {2}.", compWins, currentRound, numRounds);
+                        Console.WriteLine("The Computer has already won {0} out of {1} rounds, and is automatically declared the winner.", compWins, numRounds);
                         break;
                     }
                     else if (currentRound == numRounds)
                     {   /* Compare will return a 1 if the player has won, and -1 if comp has won. There can be no 0 (tie). */
                         if (playerWins.CompareTo(compWins) == 1)
                         {
-                            Console.WriteLine("COGRATULATIONS, YOU HAVE BEAT THE COMPUTER!!!");
+                            Console.WriteLine("Out of {0} rounds, the Player won {1} rounds and the Computer won {2}. CONGRATS YOU WIN!!!!", numRounds, playerWins, compWins);
                         }
                         else
                         {
-                            Console.WriteLine("Thats too bad, the computer won...");
+                            Console.WriteLine("Out of {0} rounds, the Player won {1} round(s) and the Computer won {2} round(s). The Computer won, better luck next time.", numRounds, playerWins, compWins);
                         }
                     }
                 }
