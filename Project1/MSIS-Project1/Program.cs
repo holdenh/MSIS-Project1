@@ -274,11 +274,11 @@ namespace MSIS_Project1
                     {   /* Compare will return a 1 if the player has won, and -1 if comp has won. There can be no 0 (tie). */
                         if (playerWins.CompareTo(compWins) == 1)
                         {
-                            Console.WriteLine("Out of {0} rounds, the Player won {1} rounds and the Computer won {2}. CONGRATS YOU WIN!!!!", numRounds, playerWins, compWins);
+                            Console.WriteLine("Out of {0} rounds the Player won {1} round(s), and the Computer won {2}. CONGRATS YOU WIN!!!!", numRounds, playerWins, compWins);
                         }
                         else
                         {
-                            Console.WriteLine("Out of {0} rounds, the Player won {1} round(s) and the Computer won {2} round(s). The Computer won, better luck next time.", numRounds, playerWins, compWins);
+                            Console.WriteLine("Out of {0} rounds the Player won {1} round(s), and the Computer won {2} round(s). The Computer won, better luck next time.", numRounds, playerWins, compWins);
                         }
                     }
                 }
