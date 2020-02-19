@@ -231,7 +231,7 @@ namespace MSIS_Project1
                 while (currentRound < numRounds)
                 {
                     /* take user and computer selections */
-                    Console.WriteLine("\t\tROUND {0} of {1}!\n", currentRound + 1, numRounds);
+                    Console.WriteLine("\t\tROUND {0} of {1}!", currentRound + 1, numRounds);
                     uSelection = getUserSelection();
                     cSelection = selections[rand.Next(0, selections.Length)];
                     /* find the winner of the round, and add the round point. */
@@ -240,7 +240,7 @@ namespace MSIS_Project1
                     if (winner == "tie")
                     {
                         Console.WriteLine("This round was a tie.");
-                        Console.WriteLine("CURRENT SCORE \n\tPLAYER: {0}\n\tCOMPUTER: {1}\n", playerWins, compWins);
+                        Console.WriteLine("\nCURRENT SCORE \n\tPLAYER: {0}\n\tCOMPUTER: {1}\n", playerWins, compWins);
                         continue;
                     }
                     else if (winner == "Player")
@@ -257,7 +257,7 @@ namespace MSIS_Project1
 
                     /* print output and increment round. */
                     Console.WriteLine(winner + " wins round {0}!", currentRound + 1);
-                    Console.WriteLine("CURRENT SCORE \n\tPLAYER: {0}\n\tCOMPUTER: {1}\n", playerWins, compWins);
+                    Console.WriteLine("\nCURRENT SCORE \n\tPLAYER: {0}\n\tCOMPUTER: {1}\n", playerWins, compWins);
                     currentRound++;
                     /* check if the win limit as been reached, if the last round was just played. Then display the winner of the Match. */
                     if (playerWins == winLimit && currentRound != numRounds)
