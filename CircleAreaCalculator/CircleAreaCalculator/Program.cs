@@ -11,11 +11,22 @@ namespace CircleAreaCalculator
             while (!exit)
             {
                 // Part Two (2-14-20)
-                Console.Write("Please enter the number of circles: ");
-                int numCircles = Convert.ToInt32(Console.ReadLine());
+                int numCircles;
                 int currentCircle = 0;
                 int maxTries = 3;
                 int tryCounter = 0;
+                Console.Write("Please enter the number of circles: ");
+                // Add try catch to handle bad input. (2-21-20).
+                try 
+                {
+                    numCircles = Convert.ToInt32(Console.ReadLine());
+                    
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("This is not a valid input.");
+                    continue;
+                }
                 while (currentCircle < numCircles)
                 {
                     
@@ -23,8 +34,8 @@ namespace CircleAreaCalculator
 
                     // Step one
                     double radius;
-                    // Add try catch block.
-                    try
+                    // Add try catch block. (2-21-20)
+                    try 
                     {
                         radius = Convert.ToDouble(Console.ReadLine());
                     }
