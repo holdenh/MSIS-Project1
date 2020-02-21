@@ -22,7 +22,24 @@ namespace CircleAreaCalculator
                     Console.Write("Please enter the circle {0}'s radius: ", currentCircle+1);
 
                     // Step one
-                    int radius = Convert.ToInt32(Console.ReadLine());
+                    double radius;
+                    // Add try catch block.
+                    try
+                    {
+                        radius = Convert.ToDouble(Console.ReadLine());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("This was not a valid input.");
+                        // Ask if user wants to see the error exception.
+                        //Console.Write("Print error exception?(y/n) : ");
+                        //string printError = Console.ReadLine();
+                        //if (printError.ToLower() == "y")
+                        //{
+                        //    Console.WriteLine("\n{0}\n", e.ToString());
+                        //}
+                        continue;
+                    }
                     if (radius >= 0)
                     {
                         // Step two
