@@ -20,9 +20,10 @@ namespace InClassExercise1_Mod5
                 double itemPrice = 0;
                 double totalPayment = 0;
                 double currBalance = 0;
+                double refund = 0;
 
                 bool takeProduct = true;
-                Console.WriteLine("WELCOME TO THE VENDING MACHINE");
+                Console.WriteLine("WELCOME TO THE VENDING MACHINE\n\n");
                 while (takeProduct)
                 {
 
@@ -43,28 +44,29 @@ namespace InClassExercise1_Mod5
                     switch (userSelection)
                     {
                         case 1:
-                            itemPrice = 1.00;
+                            itemPrice = 100;
                             product = "soda";
                             break;
                         case 2:
-                            itemPrice = 2.00;
+                            itemPrice = 200;
                             product = "cookies";
                             break;
                         case 3:
-                            itemPrice = 1.50;
+                            itemPrice = 150;
                             product = "chips";
                             break;
-
+                        default:
+                            Console.Clear();
+                            break;
                     }
 
                     /* take user payment. */
-                    currBalance = itemPrice - totalPayment;
-                    while (totalPayment < currBalance)
+                    currBalance = itemPrice;
+                    while (currBalance > 0)
                     {
-                        double payment = 0;
-                        currBalance = itemPrice - totalPayment;
-                        Console.WriteLine("You still owe {0} for your {1}.", currBalance, product);
-                        Console.Write("Please insert a coin : ");
+                        Console.WriteLine("\nYou owe {0} cents for your {1}.", currBalance, product);
+                        int payment = 0;
+                        Console.Write("Please insert a coin (5, 10, 25) : ");
                         try
                         {
                             payment = Convert.ToInt32(Console.ReadLine());
@@ -74,9 +76,9 @@ namespace InClassExercise1_Mod5
                                 continue;
                             }
                             /* If payment is accepted, add to the total payment. */
-                            payment = payment / 100;
                             totalPayment = totalPayment + payment;
-                            Console.WriteLine(totalPayment);
+                            Console.WriteLine("\n\t Total Payment: {0}",totalPayment);
+                            currBalance = currBalance - payment;
                         }
                         catch (Exception)
                         {
@@ -84,7 +86,16 @@ namespace InClassExercise1_Mod5
                             continue;
                         }
                     }
+
+                    /* Give user a refund if needed (print refund statement.). */
+                    if (currBalance < 0)
+                    {
+                        refund = currBalance * -1;
+                        Console.WriteLine("\nYou overpayed for your {0}. Change back : {1} cents", product, refund);
+                    }
                 } 
+                
+                /* Ask user if they want to purchase more products from machine. */
             }
         }
     }
