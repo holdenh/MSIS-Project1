@@ -13,7 +13,8 @@ namespace InClassExercise1_Mod5
         static void Main(string[] args)
         {
 
-            while (true)
+            bool exit = false;
+            while (!exit)
             {
                 int userSelection;
                 string product = "";
@@ -57,7 +58,7 @@ namespace InClassExercise1_Mod5
                             break;
                         default:
                             Console.Clear();
-                            break;
+                            continue;
                     }
 
                     /* take user payment. */
@@ -77,12 +78,12 @@ namespace InClassExercise1_Mod5
                             }
                             /* If payment is accepted, add to the total payment. */
                             totalPayment = totalPayment + payment;
-                            Console.WriteLine("\n\t Total Payment: {0}",totalPayment);
+                            Console.WriteLine("\n\t Total Payment: {0}", totalPayment);
                             currBalance = currBalance - payment;
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("Not a valid input. Please try again.") ;
+                            Console.WriteLine("Not a valid input. Please try again.");
                             continue;
                         }
                     }
@@ -93,9 +94,16 @@ namespace InClassExercise1_Mod5
                         refund = currBalance * -1;
                         Console.WriteLine("\nYou overpayed for your {0}. Change back : {1} cents", product, refund);
                     }
-                } 
-                
-                /* Ask user if they want to purchase more products from machine. */
+                    /* Ask user if they want to purchase more products from machine. */
+                    Console.WriteLine("Thank you for your purchase of {0}. Ejoy!\n\nMore products to buy?",product);
+                    Console.Write("Enter y or n: ");
+                    string moreProducts = Console.ReadLine();
+                    if (moreProducts != "y")
+                    {
+                        exit = true;
+                    }
+                    Console.Clear();
+                }
             }
         }
     }
