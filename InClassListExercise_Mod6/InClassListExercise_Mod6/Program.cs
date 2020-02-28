@@ -19,7 +19,7 @@ namespace InClassListExercise_Mod6
             List<int> revList = revRecur(myNums, emptyList);
            
             Console.WriteLine("\nReverseList");
-            for (int i = 0; i < myNums.Count; i++)
+            for (int i = 0; i < revList.Count; i++)
             {
                 Console.Write(revList[i] + " ");
             }
@@ -30,7 +30,7 @@ namespace InClassListExercise_Mod6
         public static List<int> revRecur (List<int> inList, List<int> outList)
         {
             /* Base Case */
-            if (inList.Count == outList.Count)
+            if (inList.Count == 0)
             {
                 Console.WriteLine("Done reversing.");
             }
