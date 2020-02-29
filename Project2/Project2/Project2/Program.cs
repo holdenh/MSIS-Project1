@@ -5,6 +5,9 @@ using System.Collections.Generic;
  *      Holden Halferty
  *      
  *      Project 2. 
+ *          Draw a card randomly from the deck until atleast one card from each suit has been drawn.
+ *          This is done with replacement, but the cards that "represent" their suits must be stored as well.
+ *          At the end of the program, display the collection along with the number of draws it took to complete the task.
  */
 
 namespace Project2
