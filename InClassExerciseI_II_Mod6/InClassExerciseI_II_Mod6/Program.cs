@@ -43,9 +43,9 @@ namespace InClassExerciseI_II_Mod6
                 cardSuit = suits[(card / 13)];
                 cardValue = ranks[(card % 13)];
 
-                Console.WriteLine("\tCard #{0}   : is the {1} of {2}.", card, cardValue, cardSuit);
                 if (!drawnCards.Contains(card))
                 {
+                    Console.WriteLine("\tCard #{0}   : is the {1} of {2}.", card, cardValue, cardSuit);
                     drawnCards.Add(card);
                     /* check if the suit has already had a card selected. */
                     if (!pickedSuits.Contains(cardSuit))
