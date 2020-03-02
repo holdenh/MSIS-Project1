@@ -37,7 +37,7 @@ namespace InClassListExercise_Mod6
             /* Inductive Case */
             else
             { 
-                outList.Add(inList.Count - 1);
+                outList.Add(inList[inList.Count-1]);
                 inList.RemoveAt(inList.Count - 1);
                 revRecur(inList, outList);
             }
