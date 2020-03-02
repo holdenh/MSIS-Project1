@@ -8,7 +8,7 @@ namespace InClassExerciseI_II_Mod6
      *      In class Exercise 
      *          March 2, 2020
      *          
-     *      Create a deck of cards that will draw one of each suit WITH REPLACEMENT.
+     *      Create a deck of cards that will draw one of each suit W/O REPLACEMENT
      */
 
     class Program
@@ -26,6 +26,7 @@ namespace InClassExerciseI_II_Mod6
             List<string> ranks = new List<string>() { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King" };
             List<string> pickedSuits = new List<string>();
             List<int> pickedCards = new List<int>();
+            List<int> drawnCards = new List<int>();
             string cardSuit;
             string cardValue;
             int card;
@@ -43,16 +44,19 @@ namespace InClassExerciseI_II_Mod6
                 cardValue = ranks[(card % 13)];
 
                 Console.WriteLine("\tCard #{0}   : is the {1} of {2}.", card, cardValue, cardSuit);
-
-                /* check if the suit has already had a card selected. */
-                if (!pickedSuits.Contains(cardSuit))
+                if (!drawnCards.Contains(card))
                 {
-                    /* For a new suit, add to the list and decrement the counter. */
-                    pickedSuits.Add(cardSuit);
-                    pickedCards.Add(card);
-                    remainingSuits--;
+                    drawnCards.Add(card);
+                    /* check if the suit has already had a card selected. */
+                    if (!pickedSuits.Contains(cardSuit))
+                    {
+                        /* For a new suit, add to the list and decrement the counter. */
+                        pickedSuits.Add(cardSuit);
+                        pickedCards.Add(card);
+                        remainingSuits--;
+                    }
+                    drawCount++;
                 }
-                drawCount++;
             }
             Console.WriteLine("\nCards that make Suit Collection :");
             foreach (int pCard in pickedCards)
