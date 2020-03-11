@@ -9,14 +9,23 @@ namespace InClassExercise1_Mod7
         {
 
             bool exit = false;
+            Dictionary<string, List<double>> receipt = new Dictionary<string, List<double>>(); // product, {quantity, unitPrice}
+            int userSelection;
+            string product = "";
+            int amount = 0;
+            double itemPrice = 0;
+            double totalPayment = 0;
+            double currBalance = 0;
+            double refund = 0;
             while (!exit)
             {
-                int userSelection;
-                string product = "";
-                double itemPrice = 0;
-                double totalPayment = 0;
-                double currBalance = 0;
-                double refund = 0;
+               /* reset all variables. */
+                product = "";
+                amount = 0;
+                itemPrice = 0;
+                totalPayment = 0;
+                currBalance = 0;
+                refund = 0;
 
                 bool takeProduct = true;
                 Console.WriteLine("WELCOME TO THE VENDING MACHINE\n\n");
@@ -29,6 +38,9 @@ namespace InClassExercise1_Mod7
                     {
                         userSelection = Convert.ToInt32(Console.ReadLine());
                         takeProduct = false;
+
+                        Console.Write("How many of the product would you like? : ");
+                        amount = Convert.ToInt32(Console.ReadLine());
                     }
                     catch (Exception e)
                     {
@@ -55,9 +67,21 @@ namespace InClassExercise1_Mod7
                             Console.Clear();
                             continue;
                     }
-
+                    
                     /* take user payment. */
-                    currBalance = itemPrice;
+                    currBalance = itemPrice * amount;
+
+                    /* Add the product to the dictionary. use produce amount. */
+                    if (!receipt.ContainsKey(product))
+                    {
+                        //receipt.Add(product, );
+                        receipt[product][0] = amount;
+                        receipt[product][1] = itemPrice;
+                    }
+                    else
+                    {
+                        receipt[product][0] += amount;
+                    }
                     while (currBalance > 0)
                     {
                         Console.WriteLine("\nYou owe {0} cents for your {1}.", currBalance, product);
@@ -100,6 +124,16 @@ namespace InClassExercise1_Mod7
                     Console.Clear();
                 }
             }
+            /* print the customers final receipt. */
+            Console.WriteLine("Customer Receipt.");
+            Console.WriteLine("ITEM\t\tQUANTITY\t\tPRICE\n");
+            foreach (KeyValuePair<string, List<double>> item in receipt)
+            {
+                Console.WriteLine("{0}\t\t    {1}\t\t    ", item.Key, item.Value);
+            }
+
+
+            Console.ReadKey();
         }
     }
 }
