@@ -74,9 +74,9 @@ namespace InClassExercise1_Mod7
                     /* Add the product to the dictionary. use produce amount. */
                     if (!receipt.ContainsKey(product))
                     {
-                        //receipt.Add(product, );
-                        receipt[product][0] = amount;
-                        receipt[product][1] = itemPrice;
+                        List<double> productDetails = new List<double>() { amount, itemPrice};
+                        receipt[product] = productDetails;
+
                     }
                     else
                     {
@@ -126,12 +126,14 @@ namespace InClassExercise1_Mod7
             }
             /* print the customers final receipt. */
             Console.WriteLine("Customer Receipt.");
-            Console.WriteLine("ITEM\t\tQUANTITY\t\tPRICE\n");
+            Console.WriteLine("ITEM\t\tQUANTITY\tUNITPRICE\tITEM TOTAL\n");
+            double receiptTotal = 0;
             foreach (KeyValuePair<string, List<double>> item in receipt)
             {
-                Console.WriteLine("{0}\t\t    {1}\t\t    ", item.Key, item.Value);
+                Console.WriteLine("{0}\t\t   {1}\t\t   {2}\t\t   ${3}", item.Key, item.Value[0], item.Value[1], ((item.Value[0] * item.Value[1])/100));
+                receiptTotal += ((item.Value[0] * item.Value[1]) / 100);
             }
-
+            Console.WriteLine("\nGRAND TOTAL :\t${0}", receiptTotal);
 
             Console.ReadKey();
         }
