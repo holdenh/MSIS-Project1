@@ -45,18 +45,44 @@ namespace InclassExerciseII_Mod7_Wk11
 
 
             // Display
-            Console.WriteLine("Part 1.\n");
+            Console.WriteLine("Week 11. Inclass Exercise II(Mod7).\n");
             foreach (KeyValuePair<String, Dictionary<int, List<int>>> stuReport in students)
             {
                 Dictionary<int, List<int>> report = stuReport.Value;
-                foreach(KeyValuePair<int, List<int>> g in report)
+                foreach (KeyValuePair<int, List<int>> g in report)
                 {
-                    Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%\n\tExam Avg: {4}%", stuReport.Key, g.Value[0], g.Value[1], g.Value[2], g.Key);
+                    Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%\n\t{0}'s Exam Avg: {4}%", stuReport.Key, g.Value[0], g.Value[1], g.Value[2], g.Key);
+                }
+
+            }
+            // Find student will the highest avg.
+            int max = 0;
+            foreach (KeyValuePair<String, Dictionary<int, List<int>>> stuReport in students)
+            {
+                Dictionary<int, List<int>> report = stuReport.Value;
+                
+                foreach (int key in report.Keys)
+                {
+                    if (key > max)
+                    {
+                        max = key;
+                    }
+                }
+                
+            }
+            foreach (KeyValuePair<String, Dictionary<int, List<int>>> stuReport in students)
+            {
+                Dictionary<int, List<int>> report = stuReport.Value;
+                foreach (KeyValuePair<int, List<int>> g in report)
+                {
+                    if (g.Key == max)
+                    {
+                        Console.WriteLine("\n\n{0} has the highest average of {1}%", stuReport.Key, g.Key);
+                        Console.ReadKey();
+                        break;
+                    }
                 }
             }
-
-
-            Console.ReadKey();
         }
     }
 }
