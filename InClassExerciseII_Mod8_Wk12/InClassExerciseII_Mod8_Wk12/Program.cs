@@ -131,12 +131,12 @@ namespace InClassExerciseII_Mod8_Wk12
             double totalPoints = 0.0;
             double stuAvg = 0.0;
             students[stuName][testNum - 1] = newGrade;
-            foreach (double grade in students[stuName])
+            for(int i = 0; i < students[stuName].Count-1; i++)
             {
-                totalPoints += grade;
+                totalPoints += students[stuName][i];
             }
-            stuAvg = Math.Round(totalPoints / students[stuName].Count, 2);
-            students[stuName][students.Count - 1] = stuAvg;
+            stuAvg = Math.Round(totalPoints / (students[stuName].Count - 1), 2);
+            students[stuName][(students[stuName].Count - 1)] = stuAvg;
         }
         static void Main(string[] args)
         {
