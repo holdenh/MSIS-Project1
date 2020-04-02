@@ -50,28 +50,65 @@ namespace InClassExerciseII_Mod8_Wk12
         }
 
         /* Function that takes a dictionary and a given number, and creates/returns a playground with that amount of students having 3 grades a piece. */
-        static void buildPlayground(Dictionary<string, List<int>> dict, int num)
+        static void buildPlayground(Dictionary<string, List<double>> dict, int num)
         {
             Random rand = new Random();
             for (int i = 0; i < num; i++)
             {
-                List<int> stuGrades = new List<int> { rand.Next(60, 101), rand.Next(60, 101), rand.Next(60, 101) };
-                string stuName = "Student " + (i + 1);
+                List<double> stuGrades = new List<double> { (double)rand.Next(60, 101), (double)rand.Next(60, 101), (double)rand.Next(60, 101) };
+                double totalPoints = 0;
+                double stuAvg = 0.0;
+                foreach (int grade in stuGrades)
+                {
+                    totalPoints += grade;
+                }
+                stuAvg = Math.Round(totalPoints / stuGrades.Count, 2);
+                stuGrades.Add(stuAvg);
+                string stuName = "student " + (i + 1);
                 dict.Add(stuName, stuGrades);
             }
         }
 
         /* Function that is used to display all the studetns of a given dictionary. */
-        static void displayAll(Dictionary<string, List<int>> students)
+        static void displayAll(Dictionary<string, List<double>> students)
         {
-            foreach (KeyValuePair<String, List<int>> stuReport in students)
+            foreach (KeyValuePair<String, List<double>> stuReport in students)
             {
-                Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%", stuReport.Key, stuReport.Value[0], stuReport.Value[1], stuReport.Value[2]);
+                Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%\n\tStudent AVG: {4}%", stuReport.Key, stuReport.Value[0], stuReport.Value[1], stuReport.Value[2], stuReport.Value[3]);
             }
         }
+
+        /* Function that is used to display a specific of a given dictionary. The name of a student will be pass in. */
+        static void displayStudent(Dictionary<string, List<double>> students, string stuName)
+        {
+            foreach (KeyValuePair<string, List<double>> stuReport in students)
+            {
+                if (stuReport.Key.ToLower().Equals(stuName.ToLower()))
+                {
+                    Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%\n\tStudent AVG: {4}%", stuReport.Key, stuReport.Value[0], stuReport.Value[1], stuReport.Value[2], stuReport.Value[3]);
+                }
+            }
+        }
+
+        /* Function that is used to display a specific of a given dictionary. The name of a student will be pass in. */
+        static void displayTopStudent(Dictionary<string, List<double>> students)
+        {
+            KeyValuePair<string, List<double>> topStu = new KeyValuePair<string, List<double>>("", new List<double> { 0.0, 0.0, 0.0, 0.0 });
+            foreach (KeyValuePair<string, List<double>> stuReport in students)
+            {
+                if (stuReport.Value[3] > topStu.Value[3])
+                {
+                    topStu = stuReport;
+                }
+            }
+            Console.WriteLine("\nStudent with the highest average of test scores is : \n");
+            displayStudent(students, topStu.Key);
+        }
+
+        /* Function that will add a single student with name incremented, and 3 random test grades. */
         static void Main(string[] args)
         {
-            Dictionary<string, List<int>> playground = new Dictionary<string, List<int>>();
+            Dictionary<string, List<double>> playground = new Dictionary<string, List<double>>();
             bool exit = false;
             while (!exit)
             {
@@ -93,17 +130,19 @@ namespace InClassExerciseII_Mod8_Wk12
                         Console.ReadKey();
                         break;
                     case 3:
-                        //displayStudent(studentName);
+                        Console.Write("What is the students name? : ");
+                        string studentName = Console.ReadLine();
+                        displayStudent(playground, studentName);
                         Console.Write("\nPress any key to continue.");
                         Console.ReadKey();
                         break;
                     case 4:
-                        //displayTopStudent();
+                        displayTopStudent(playground);
                         Console.Write("\nPress any key to continue.");
                         Console.ReadKey();
                         break;
                     case 5:
-                        //addStudent(student);
+                        //addStudent(playground);
                         Console.Write("\nPress any key to continue.");
                         Console.ReadKey();
                         break;
@@ -113,7 +152,7 @@ namespace InClassExerciseII_Mod8_Wk12
                         Console.ReadKey();
                         break;
                     case 7:
-                        exit = false;
+                        exit = true;
                         break;
                 }
             }
