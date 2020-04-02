@@ -63,12 +63,11 @@ namespace InClassExerciseII_Mod8_Wk12
         {
             foreach (KeyValuePair<String, List<double>> stuReport in students)
             {
-                displayStudent(students, stuReport.Key);
+                Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%\n\tStudent AVG: {4}%", stuReport.Key, stuReport.Value[0], stuReport.Value[1], stuReport.Value[2], stuReport.Value[3]);
             }
         }
-
-        /* Function that is used to display a specific of a given dictionary. The name of a student will be pass in. */
-        static void displayStudent(Dictionary<string, List<double>> students, string stuName)
+        /* function that searches for a given student in the dictionary. */
+        static bool searchFor(Dictionary<string, List<double>> students, string stuName)
         {
             bool found = false;
             foreach (KeyValuePair<string, List<double>> stuReport in students)
@@ -76,12 +75,20 @@ namespace InClassExerciseII_Mod8_Wk12
                 if (stuReport.Key.ToLower().Equals(stuName.ToLower()))
                 {
                     found = true;
-                    Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%\n\tStudent AVG: {4}%", stuReport.Key, stuReport.Value[0], stuReport.Value[1], stuReport.Value[2], stuReport.Value[3]);
                 }
             }
             if (found == false)
             {
                 Console.WriteLine("{0} not found on the playground.", stuName);
+            }
+            return found;
+        }
+        /* Function that is used to display a specific of a given dictionary. The name of a student will be pass in. */
+        static void displayStudent(Dictionary<string, List<double>> students, string stuName)
+        {
+            if (searchFor(students, stuName))
+            {
+                Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%\n\tStudent AVG: {4}%", stuName, students[stuName][0], students[stuName][1], students[stuName][2], students[stuName][3]);
             }
         }
 
@@ -116,6 +123,20 @@ namespace InClassExerciseII_Mod8_Wk12
             stuGrades.Add(stuAvg);
             string stuName = "student " + (students.Count + 1);
             students.Add(stuName, stuGrades);
+        }
+
+        /* function that will take a given student name, and change a one of their test grades.*/
+        static void changeStudentGrade(Dictionary<string, List<double>> students, string stuName, int testNum, double newGrade)
+        {
+            double totalPoints = 0.0;
+            double stuAvg = 0.0;
+            students[stuName][testNum - 1] = newGrade;
+            foreach (double grade in students[stuName])
+            {
+                totalPoints += grade;
+            }
+            stuAvg = Math.Round(totalPoints / students[stuName].Count, 2);
+            students[stuName][students.Count - 1] = stuAvg;
         }
         static void Main(string[] args)
         {
@@ -155,13 +176,28 @@ namespace InClassExerciseII_Mod8_Wk12
                     case 5:
                         addStudent(playground);
                         Console.WriteLine("A single student was added.");
+                        displayAll(playground);
                         Console.Write("\nPress any key to continue.");
                         Console.ReadKey();
                         break;
                     case 6:
-                        //changeStudentGrade(studentName, testNum, newGrade);
-                        Console.Write("\nPress any key to continue.");
-                        Console.ReadKey();
+                        Console.Write("Student's name : ");
+                        studentName = Console.ReadLine();
+                        if (searchFor(playground, studentName))
+                        {
+                            Console.WriteLine("{0}'s current grades\n", studentName);
+                            displayStudent(playground, studentName);
+                            Console.Write("\nExam Number to Change : ");
+                            int testNum = Convert.ToInt32(Console.ReadLine());
+                            Console.Write("\nNew Test Grade :");
+                            double newGrade = Convert.ToDouble(Console.ReadLine());
+                            changeStudentGrade(playground, studentName, testNum, newGrade);
+                            Console.WriteLine("\n{0}'s grades after the change to Exam 3 \n",studentName);
+                            displayStudent(playground, studentName);
+                            Console.Write("\nPress any key to continue.");
+                            Console.ReadKey();
+                            break;
+                        }
                         break;
                     case 7:
                         exit = true;
