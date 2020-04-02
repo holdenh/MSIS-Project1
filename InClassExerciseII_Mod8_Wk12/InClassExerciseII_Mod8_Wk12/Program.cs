@@ -48,11 +48,15 @@ namespace InClassExerciseII_Mod8_Wk12
         }
         static void Main(string[] args)
         {
-
-            while (true)
+            bool exit = false;
+            while (!exit)
             {
                 displayMenu();
                 int menuSelection = getUserOption();
+                if (menuSelection.Equals(7))
+                {
+                    exit = true;
+                }
                 Console.WriteLine("\n"+ menuSelection);
                 Console.ReadKey();
             }
