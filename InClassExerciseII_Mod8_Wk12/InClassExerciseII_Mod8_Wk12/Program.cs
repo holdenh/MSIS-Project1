@@ -13,6 +13,8 @@ namespace InClassExerciseII_Mod8_Wk12
 {
     class Program
     {
+
+
         /* Function that is called that display different use options. */
         static void displayMenu()
         {
@@ -46,18 +48,53 @@ namespace InClassExerciseII_Mod8_Wk12
                 return getUserOption();
             }
         }
+
+        /* Function that takes a dictionary and a given number, and creates/returns a playground with that amount of students having 3 grades a piece. */
+        static void buildPlayground(Dictionary<string, List<int>> dict, int num)
+        {
+            Random rand = new Random();
+            for (int i = 0; i < num; i++)
+            {
+                List<int> stuGrades = new List<int> { rand.Next(60, 101), rand.Next(60, 101), rand.Next(60, 101) };
+                string stuName = "Student " + (i + 1);
+                dict.Add(stuName, stuGrades);
+            }
+        }
         static void Main(string[] args)
         {
+            Dictionary<string, List<int>> playground = new Dictionary<string, List<int>>();
             bool exit = false;
             while (!exit)
             {
                 displayMenu();
                 int menuSelection = getUserOption();
-                if (menuSelection.Equals(7))
-                {
-                    exit = true;
-                }
                 Console.WriteLine("\n"+ menuSelection);
+                switch(menuSelection)
+                {
+                    case 1:
+                        Console.Write("How many students do you have? : ");
+                        int numStu = Convert.ToInt32(Console.ReadLine());
+                        buildPlayground(playground, numStu);
+                        break;
+                    case 2:
+                        //displayAll();
+                        break;
+                    case 3:
+                        //displayStudent(studentName);
+                        break;
+                    case 4:
+                        //displayTopStudent();
+                        break;
+                    case 5:
+                        //addStudent(student);
+                        break;
+                    case 6:
+                        //changeStudentGrade(studentName, testNum, newGrade);
+                        break;
+                    case 7:
+                        exit = false;
+                        break;
+                }
                 Console.ReadKey();
             }
         }
