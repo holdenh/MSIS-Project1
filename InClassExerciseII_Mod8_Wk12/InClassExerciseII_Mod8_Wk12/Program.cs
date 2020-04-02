@@ -60,6 +60,15 @@ namespace InClassExerciseII_Mod8_Wk12
                 dict.Add(stuName, stuGrades);
             }
         }
+
+        /* Function that is used to display all the studetns of a given dictionary. */
+        static void displayAll(Dictionary<string, List<int>> students)
+        {
+            foreach (KeyValuePair<String, List<int>> stuReport in students)
+            {
+                Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%", stuReport.Key, stuReport.Value[0], stuReport.Value[1], stuReport.Value[2]);
+            }
+        }
         static void Main(string[] args)
         {
             Dictionary<string, List<int>> playground = new Dictionary<string, List<int>>();
@@ -68,34 +77,45 @@ namespace InClassExerciseII_Mod8_Wk12
             {
                 displayMenu();
                 int menuSelection = getUserOption();
-                Console.WriteLine("\n"+ menuSelection);
                 switch(menuSelection)
                 {
                     case 1:
                         Console.Write("How many students do you have? : ");
                         int numStu = Convert.ToInt32(Console.ReadLine());
                         buildPlayground(playground, numStu);
+                        Console.WriteLine("Playground of {0} students created", numStu);
+                        Console.Write("\nPress any key to continue.");
+                        Console.ReadKey();
                         break;
                     case 2:
-                        //displayAll();
+                        displayAll(playground);
+                        Console.Write("\nPress any key to continue.");
+                        Console.ReadKey();
                         break;
                     case 3:
                         //displayStudent(studentName);
+                        Console.Write("\nPress any key to continue.");
+                        Console.ReadKey();
                         break;
                     case 4:
                         //displayTopStudent();
+                        Console.Write("\nPress any key to continue.");
+                        Console.ReadKey();
                         break;
                     case 5:
                         //addStudent(student);
+                        Console.Write("\nPress any key to continue.");
+                        Console.ReadKey();
                         break;
                     case 6:
                         //changeStudentGrade(studentName, testNum, newGrade);
+                        Console.Write("\nPress any key to continue.");
+                        Console.ReadKey();
                         break;
                     case 7:
                         exit = false;
                         break;
                 }
-                Console.ReadKey();
             }
         }
     }
