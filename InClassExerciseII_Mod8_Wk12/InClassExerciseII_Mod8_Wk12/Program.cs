@@ -52,20 +52,9 @@ namespace InClassExerciseII_Mod8_Wk12
         /* Function that takes a dictionary and a given number, and creates/returns a playground with that amount of students having 3 grades a piece. */
         static void buildPlayground(Dictionary<string, List<double>> dict, int num)
         {
-            Random rand = new Random();
             for (int i = 0; i < num; i++)
             {
-                List<double> stuGrades = new List<double> { (double)rand.Next(60, 101), (double)rand.Next(60, 101), (double)rand.Next(60, 101) };
-                double totalPoints = 0;
-                double stuAvg = 0.0;
-                foreach (int grade in stuGrades)
-                {
-                    totalPoints += grade;
-                }
-                stuAvg = Math.Round(totalPoints / stuGrades.Count, 2);
-                stuGrades.Add(stuAvg);
-                string stuName = "student " + (i + 1);
-                dict.Add(stuName, stuGrades);
+                addStudent(dict);
             }
         }
 
@@ -74,19 +63,25 @@ namespace InClassExerciseII_Mod8_Wk12
         {
             foreach (KeyValuePair<String, List<double>> stuReport in students)
             {
-                Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%\n\tStudent AVG: {4}%", stuReport.Key, stuReport.Value[0], stuReport.Value[1], stuReport.Value[2], stuReport.Value[3]);
+                displayStudent(students, stuReport.Key);
             }
         }
 
         /* Function that is used to display a specific of a given dictionary. The name of a student will be pass in. */
         static void displayStudent(Dictionary<string, List<double>> students, string stuName)
         {
+            bool found = false;
             foreach (KeyValuePair<string, List<double>> stuReport in students)
             {
                 if (stuReport.Key.ToLower().Equals(stuName.ToLower()))
                 {
+                    found = true;
                     Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%\n\tStudent AVG: {4}%", stuReport.Key, stuReport.Value[0], stuReport.Value[1], stuReport.Value[2], stuReport.Value[3]);
                 }
+            }
+            if (found == false)
+            {
+                Console.WriteLine("{0} not found on the playground.", stuName);
             }
         }
 
@@ -105,7 +100,23 @@ namespace InClassExerciseII_Mod8_Wk12
             displayStudent(students, topStu.Key);
         }
 
-        /* Function that will add a single student with name incremented, and 3 random test grades. */
+        /* Function that will add a single student to the passed in dictionary with name incremented, and 3 random test grades. */
+        static void addStudent(Dictionary<string, List<double>> students)
+        {
+            Random rand = new Random();
+
+            List<double> stuGrades = new List<double> { (double)rand.Next(60, 101), (double)rand.Next(60, 101), (double)rand.Next(60, 101) };
+            double totalPoints = 0;
+            double stuAvg = 0.0;
+            foreach (int grade in stuGrades)
+            {
+                totalPoints += grade;
+            }
+            stuAvg = Math.Round(totalPoints / stuGrades.Count, 2);
+            stuGrades.Add(stuAvg);
+            string stuName = "student " + (students.Count + 1);
+            students.Add(stuName, stuGrades);
+        }
         static void Main(string[] args)
         {
             Dictionary<string, List<double>> playground = new Dictionary<string, List<double>>();
@@ -142,7 +153,8 @@ namespace InClassExerciseII_Mod8_Wk12
                         Console.ReadKey();
                         break;
                     case 5:
-                        //addStudent(playground);
+                        addStudent(playground);
+                        Console.WriteLine("A single student was added.");
                         Console.Write("\nPress any key to continue.");
                         Console.ReadKey();
                         break;
