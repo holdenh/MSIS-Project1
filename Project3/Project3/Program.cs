@@ -24,7 +24,7 @@ namespace Project3
             Console.Clear();
             Console.WriteLine("REPORT MENU\n");
             Console.WriteLine("1) Show all grades for a single student");
-            Console.WriteLine("2) Display the name and grades of the top student");
+            Console.WriteLine("2) Display the name and grade AVG of the top student");
             Console.WriteLine("3) Return to Main Menu");
         }
 
@@ -33,11 +33,23 @@ namespace Project3
         {
             Console.Clear();
             Console.WriteLine("STUDENT MANAGEMENT MENU\n");
-            Console.WriteLine("1) Change Student Name");
-            Console.WriteLine("2) Add a Student (no grades)");
+            Console.WriteLine("1) Change student's name");
+            Console.WriteLine("2) Add a student (no grades)");
             Console.WriteLine("3) Delete a student");
             Console.WriteLine("4) Return to Main Menu");
         }
+
+        /* Function that will display the different options for the grade management menu. */
+        static void displayGradeMgmtMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("GRADE MANAGEMENT MENU\n");
+            Console.WriteLine("1) Change student's grade");
+            Console.WriteLine("2) Add a new grade");
+            Console.WriteLine("3) Delete a student's grade");
+            Console.WriteLine("4) Return to Main Menu");
+        }
+
         /* Function that will take input from the user based on the Menu options. Will take a parameter mode to determine different bounds
             for the different display menus. */
         static int getUserOption(int mode)
@@ -132,6 +144,19 @@ namespace Project3
             return found;
         }
 
+        /* Function that will take a student's name and newGrade, and will add that grade to their list of currently tracked grades. */
+        static void addNewGrade(Dictionary<string, List<int>> students, string stuName, int newGrade)
+        {
+            if (searchFor(students, stuName))
+            {
+                students[stuName].Add(newGrade);
+            }
+            else 
+            {
+                Console.WriteLine("\n{0} is not in the database.\nNo changes were made.");
+            }
+        }
+
         /* Function that will search the dictionary for the given name, if found it will ask for the new name that user would like the 
          *  student's name to be saved as. */
         static void changeStudentName(Dictionary<string, List<int>> students, string stuName)
@@ -183,7 +208,13 @@ namespace Project3
             {
                 if (students[stuName].Count != 0)
                 {
-                    Console.WriteLine("Student: {0}\n\tExam 1: {1}%\tExam 2: {2}%\tExam 3: {3}%", stuName, students[stuName][0], students[stuName][1], students[stuName][2]);
+                    Console.WriteLine("Student: {0}\n", stuName);
+                    int examNum = 1;
+                    foreach (int grade in students[stuName])
+                    {
+                        Console.Write("\tExam {0} : {1}%", examNum++, grade);
+                    }
+                    Console.WriteLine();
                 } 
                 else
                 {
@@ -293,7 +324,7 @@ namespace Project3
 
                             Console.WriteLine("\n\nPress any key to return. . .");
                             Console.ReadKey();
-                        } 
+                        }
                         else if (rOption == 2)
                         {
                             Console.Clear();
@@ -302,7 +333,7 @@ namespace Project3
 
                             Console.WriteLine("\n\nPress any key to return. . .");
                             Console.ReadKey();
-                        } 
+                        }
                         else
                         {
                             continue;
@@ -348,7 +379,31 @@ namespace Project3
                         }
                         break;
                     case 3:
-                    //displayGradeMgmtMenu();
+                        displayGradeMgmtMenu();
+                        int gOption = getUserOption(4);
+                        if (gOption == 1)
+                        {
+                            
+                        }
+                        else if (gOption == 2)
+                        {   // add new grade
+                            Console.Clear();
+                            Console.WriteLine("GRADE MGMT - ADD NEW GRADE\n");
+                            Console.Write("Enter the student's full name : ");
+                            string stuName = Console.ReadLine();
+                            Console.Write("\n\nEnter the new grade (rounded) : ");
+                            int newGrade = Convert.ToInt32(Console.ReadLine());
+                            addNewGrade(students, stuName, newGrade);
+                        }
+                        else if (gOption == 3)
+                        {
+
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        break;
                     case 4:
                         exit = true;
                         break;
