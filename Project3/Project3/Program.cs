@@ -167,6 +167,19 @@ namespace Project3
 
         }
 
+        /* Function that will take a student's name, and the grade number that needs to be changed. */
+        static void changeStudentGrade(Dictionary<string, List<int>> students, string stuName, int gradeNum)
+        {
+            // Student will always exist if this function is invoked (search done elsewhere).
+            Console.Write("\nEnter the new grade to be saved : ");
+            int newGrade = Convert.ToInt32(Console.ReadLine());
+            students[stuName].RemoveAt(gradeNum - 1);
+            students[stuName].Insert(gradeNum - 1, newGrade);
+            Console.WriteLine("\nGrade {0} was changed in {1}'s current grades.\n", gradeNum, stuName);
+            displayStudent(students, stuName);
+
+        }
+
         /* Function that will search the dictionary for the given name, if found it will ask for the new name that user would like the 
          *  student's name to be saved as. */
         static void changeStudentName(Dictionary<string, List<int>> students, string stuName)
@@ -204,6 +217,7 @@ namespace Project3
             if (searchFor(students, stuName))
             {
                 students.Remove(stuName);
+                Console.WriteLine("\n{0} was found and deleted from the Database.", stuName);
             }
             else
             {
@@ -240,17 +254,20 @@ namespace Project3
             double topAVG = 0;
             foreach (KeyValuePair<string, List<int>> stuReport in students)
             {
-                int totalPts = 0;
-                double stuAVG = 0.0;
-                foreach (int val in stuReport.Value)
+                if (stuReport.Value.Count != 0)
                 {
-                    totalPts += val;
-                }
-                stuAVG = totalPts / stuReport.Value.Count;
-                if (stuAVG > topAVG)
-                {
-                    topAVG = stuAVG;
-                    topStu = stuReport;
+                    int totalPts = 0;
+                    double stuAVG = 0.0;
+                    foreach (int val in stuReport.Value)
+                    {
+                        totalPts += val;
+                    }
+                    stuAVG = totalPts / stuReport.Value.Count;
+                    if (stuAVG > topAVG)
+                    {
+                        topAVG = stuAVG;
+                        topStu = stuReport;
+                    }
                 }
             }
             Console.WriteLine("\n{0} is the top student with an average score of {1}%\n", topStu.Key, topAVG);
@@ -393,7 +410,26 @@ namespace Project3
                         int gOption = getUserOption(4);
                         if (gOption == 1)
                         {
-                            
+                            Console.Clear();
+                            Console.WriteLine("GRADE MGMT - CHANGE A GRADE\n");
+                            Console.Write("Enter the student's full name : ");
+                            string stuName = Console.ReadLine();
+                            if (searchFor(students, stuName))
+                            {
+                                Console.WriteLine();
+                                displayStudent(students, stuName);
+                                Console.Write("\nEnter the grade # you would like to change (not the actual grade) : ");
+                                int gradeNum = Convert.ToInt32(Console.ReadLine());
+                                changeStudentGrade(students, stuName, gradeNum);
+
+                                Console.WriteLine("\n\nPress any key to return. . .");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                Console.WriteLine("\n{0} was not found in the database.");
+                                continue;
+                            }
                         }
                         else if (gOption == 2)
                         {   
@@ -421,8 +457,8 @@ namespace Project3
                                 Console.WriteLine();
                                 displayStudent(students, stuName);
                                 Console.Write("\nEnter the grade # you would like to delete (not the actual grade) : ");
-                                int newGrade = Convert.ToInt32(Console.ReadLine());
-                                deleteStudentGrade(students, stuName, newGrade);
+                                int num = Convert.ToInt32(Console.ReadLine());
+                                deleteStudentGrade(students, stuName, num);
 
                                 Console.WriteLine("\n\nPress any key to return. . .");
                                 Console.ReadKey();
