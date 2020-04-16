@@ -157,6 +157,16 @@ namespace Project3
             }
         }
 
+        /* Function that will take a students name, and the grade number that needs to be deleted. */
+        static void deleteStudentGrade(Dictionary<string, List<int>> students, string stuName, int gradeNum)
+        {
+            // Student will always exist if this function is invoked (search done elsewhere).
+            students[stuName].RemoveAt(gradeNum - 1);
+            Console.WriteLine("\nGrade {0} was removed from {1}'s current grades.\n", gradeNum, stuName);
+            displayStudent(students, stuName);
+
+        }
+
         /* Function that will search the dictionary for the given name, if found it will ask for the new name that user would like the 
          *  student's name to be saved as. */
         static void changeStudentName(Dictionary<string, List<int>> students, string stuName)
@@ -212,13 +222,13 @@ namespace Project3
                     int examNum = 1;
                     foreach (int grade in students[stuName])
                     {
-                        Console.Write("\tExam {0} : {1}%", examNum++, grade);
+                        Console.Write("\tGrade {0} : {1}%", examNum++, grade);
                     }
                     Console.WriteLine();
                 } 
                 else
                 {
-                    Console.WriteLine("Student: {0}. \tCurrently has no grades.", stuName);
+                    Console.WriteLine("Student: {0} \tCurrently has no grades.", stuName);
                 }
             }
         }
@@ -386,18 +396,42 @@ namespace Project3
                             
                         }
                         else if (gOption == 2)
-                        {   // add new grade
+                        {   
                             Console.Clear();
                             Console.WriteLine("GRADE MGMT - ADD NEW GRADE\n");
                             Console.Write("Enter the student's full name : ");
                             string stuName = Console.ReadLine();
-                            Console.Write("\n\nEnter the new grade (rounded) : ");
+                            Console.Write("\nEnter the new grade (rounded) : ");
                             int newGrade = Convert.ToInt32(Console.ReadLine());
                             addNewGrade(students, stuName, newGrade);
+                            Console.WriteLine();
+                            displayStudent(students, stuName);
+
+                            Console.WriteLine("\n\nPress any key to return. . .");
+                            Console.ReadKey();
                         }
                         else if (gOption == 3)
                         {
+                            Console.Clear();
+                            Console.WriteLine("GRADE MGMT - DELETE A GRADE\n");
+                            Console.Write("Enter the student's full name : ");
+                            string stuName = Console.ReadLine();
+                            if (searchFor(students, stuName))
+                            {
+                                Console.WriteLine();
+                                displayStudent(students, stuName);
+                                Console.Write("\nEnter the grade # you would like to delete (not the actual grade) : ");
+                                int newGrade = Convert.ToInt32(Console.ReadLine());
+                                deleteStudentGrade(students, stuName, newGrade);
 
+                                Console.WriteLine("\n\nPress any key to return. . .");
+                                Console.ReadKey();
+                            } 
+                            else
+                            {
+                                Console.WriteLine("\n{0} was not found in the database.");
+                                continue;
+                            }
                         }
                         else
                         {
