@@ -150,6 +150,7 @@ namespace Project3
             if (searchFor(students, stuName))
             {
                 students[stuName].Add(newGrade);
+                displayStudent(students, stuName);
             }
             else 
             {
@@ -170,12 +171,25 @@ namespace Project3
         /* Function that will take a student's name, and the grade number that needs to be changed. */
         static void changeStudentGrade(Dictionary<string, List<int>> students, string stuName, int gradeNum)
         {
+            if (gradeNum > students[stuName].Count & gradeNum != 1)
+            {
+                Console.WriteLine("There is not a grade {0} currently stored.", gradeNum);
+                return;
+            }
             // Student will always exist if this function is invoked (search done elsewhere).
             Console.Write("\nEnter the new grade to be saved : ");
             int newGrade = Convert.ToInt32(Console.ReadLine());
-            students[stuName].RemoveAt(gradeNum - 1);
-            students[stuName].Insert(gradeNum - 1, newGrade);
-            Console.WriteLine("\nGrade {0} was changed in {1}'s current grades.\n", gradeNum, stuName);
+            if (students[stuName].Count != 0)
+            {
+                students[stuName].RemoveAt(gradeNum - 1);
+                students[stuName].Insert(gradeNum - 1, newGrade);
+                Console.WriteLine("\nGrade {0} was changed in {1}'s current grades.\n", gradeNum, stuName);
+            }
+            else
+            {
+                students[stuName].Insert(gradeNum - 1, newGrade);
+                Console.WriteLine("\nGrade {0} was added in {1}'s current grades.\n", gradeNum, stuName);
+            }
             displayStudent(students, stuName);
 
         }
@@ -251,18 +265,18 @@ namespace Project3
         static void findTopStudent(Dictionary<string, List<int>> students)
         {
             KeyValuePair<string, List<int>> topStu = new KeyValuePair<string, List<int>>("", new List<int> { 0, 0, 0});
-            double topAVG = 0;
+            double topAVG = 0.0;
             foreach (KeyValuePair<string, List<int>> stuReport in students)
             {
                 if (stuReport.Value.Count != 0)
                 {
-                    int totalPts = 0;
+                    double totalPts = 0.0;
                     double stuAVG = 0.0;
                     foreach (int val in stuReport.Value)
                     {
                         totalPts += val;
                     }
-                    stuAVG = totalPts / stuReport.Value.Count;
+                    stuAVG = Math.Round((totalPts / stuReport.Value.Count), 2);
                     if (stuAVG > topAVG)
                     {
                         topAVG = stuAVG;
@@ -332,146 +346,155 @@ namespace Project3
             {
                 displayMainMenu();
                 int option = getUserOption(1);
+                bool goToMain = false;
                 switch (option)
                 {
                     case 1:
-                        displayReportMenu();
-                        int rOption = getUserOption(2);
-                        if (rOption == 1)
+                        while (!goToMain)
                         {
-                            Console.Clear();
-                            Console.WriteLine("REPORT - SINGLE STUDENT\n");
-                            Console.Write("Enter the student's full name, or press ENTER to exit : ");
-                            string stuName = Console.ReadLine();
-                            if (stuName != "")
+                            displayReportMenu();
+                            int rOption = getUserOption(2);
+                            if (rOption == 1)
                             {
-                                Console.WriteLine();
-                                displayStudent(students, stuName);
+                                Console.Clear();
+                                Console.WriteLine("REPORT - SINGLE STUDENT\n");
+                                Console.Write("Enter the student's full name, or press ENTER to exit : ");
+                                string stuName = Console.ReadLine();
+                                if (stuName != "")
+                                {
+                                    Console.WriteLine();
+                                    displayStudent(students, stuName);
+                                }
+
+                                Console.WriteLine("\n\nPress any key to return. . .");
+                                Console.ReadKey();
                             }
+                            else if (rOption == 2)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("REPORT - TOP STUDENT\n");
+                                findTopStudent(students);
 
-                            Console.WriteLine("\n\nPress any key to return. . .");
-                            Console.ReadKey();
-                        }
-                        else if (rOption == 2)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("REPORT - TOP STUDENT\n");
-                            findTopStudent(students);
-
-                            Console.WriteLine("\n\nPress any key to return. . .");
-                            Console.ReadKey();
-                        }
-                        else
-                        {
-                            continue;
+                                Console.WriteLine("\n\nPress any key to return. . .");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                goToMain = true;
+                            } 
                         }
                         break;
                     case 2:
-                        displayStuMgmtMenu();
-                        int sOption = getUserOption(3);
-                        if (sOption == 1)
+                        while (!goToMain)
                         {
-                            Console.Clear();
-                            Console.WriteLine("STUDENT MGMT - CHANGE STUDENT NAME\n");
-                            Console.Write("Enter the student's full name, as it is in the database, that needs changing : ");
-                            string stuName = Console.ReadLine();
-                            changeStudentName(students, stuName);
+                            displayStuMgmtMenu();
+                            int sOption = getUserOption(3);
+                            if (sOption == 1)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("STUDENT MGMT - CHANGE STUDENT NAME\n");
+                                Console.Write("Enter the student's full name, as it is in the database, that needs changing : ");
+                                string stuName = Console.ReadLine();
+                                changeStudentName(students, stuName);
 
-                            Console.WriteLine("\n\nPress any key to return. . .");
-                            Console.ReadKey();
-                        }
-                        if (sOption == 2)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("STUDENT MGMT - ADD NEW STUDENT\n");
-                            addStudent(students);
+                                Console.WriteLine("\n\nPress any key to return. . .");
+                                Console.ReadKey();
+                            }
+                            else if (sOption == 2)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("STUDENT MGMT - ADD NEW STUDENT\n");
+                                addStudent(students);
 
-                            Console.WriteLine("\n\nPress any key to return. . .");
-                            Console.ReadKey();
-                        }
-                        if (sOption == 3)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("STUDENT MGMT - DELETE STUDENT\n");
-                            Console.Write("Enter the student's full name, if found they will be deleted from the Database : ");
-                            string stuName = Console.ReadLine();
-                            deleteStudent(stuName, students);
+                                Console.WriteLine("\n\nPress any key to return. . .");
+                                Console.ReadKey();
+                            }
+                            else if (sOption == 3)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("STUDENT MGMT - DELETE STUDENT\n");
+                                Console.Write("Enter the student's full name, if found they will be deleted from the Database : ");
+                                string stuName = Console.ReadLine();
+                                deleteStudent(stuName, students);
 
-                            Console.WriteLine("\n\nPress any key to return. . .");
-                            Console.ReadKey();
-                        }
-                        else
-                        {
-                            continue;
+                                Console.WriteLine("\n\nPress any key to return. . .");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                goToMain = true;
+                            } 
                         }
                         break;
                     case 3:
-                        displayGradeMgmtMenu();
-                        int gOption = getUserOption(4);
-                        if (gOption == 1)
+                        while (!goToMain)
                         {
-                            Console.Clear();
-                            Console.WriteLine("GRADE MGMT - CHANGE A GRADE\n");
-                            Console.Write("Enter the student's full name : ");
-                            string stuName = Console.ReadLine();
-                            if (searchFor(students, stuName))
+                            displayGradeMgmtMenu();
+                            int gOption = getUserOption(4);
+                            if (gOption == 1)
                             {
+                                Console.Clear();
+                                Console.WriteLine("GRADE MGMT - CHANGE A GRADE\n");
+                                Console.Write("Enter the student's full name : ");
+                                string stuName = Console.ReadLine();
+                                if (searchFor(students, stuName))
+                                {
+                                    Console.WriteLine();
+                                    displayStudent(students, stuName);
+                                    Console.Write("\nEnter the grade # you would like to change(not the actual grade)\nIf the student has no grades, enter 1 : ");
+                                    int gradeNum = Convert.ToInt32(Console.ReadLine());
+                                    changeStudentGrade(students, stuName, gradeNum);
+
+                                    Console.WriteLine("\n\nPress any key to return. . .");
+                                    Console.ReadKey();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\n{0} was not found in the database.");
+                                    continue;
+                                }
+                            }
+                            else if (gOption == 2)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("GRADE MGMT - ADD NEW GRADE\n");
+                                Console.Write("Enter the student's full name : ");
+                                string stuName = Console.ReadLine();
+                                Console.Write("\nEnter the new grade (rounded) : ");
+                                int newGrade = Convert.ToInt32(Console.ReadLine());
+                                addNewGrade(students, stuName, newGrade);
                                 Console.WriteLine();
-                                displayStudent(students, stuName);
-                                Console.Write("\nEnter the grade # you would like to change (not the actual grade) : ");
-                                int gradeNum = Convert.ToInt32(Console.ReadLine());
-                                changeStudentGrade(students, stuName, gradeNum);
 
                                 Console.WriteLine("\n\nPress any key to return. . .");
                                 Console.ReadKey();
+                            }
+                            else if (gOption == 3)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("GRADE MGMT - DELETE A GRADE\n");
+                                Console.Write("Enter the student's full name : ");
+                                string stuName = Console.ReadLine();
+                                if (searchFor(students, stuName))
+                                {
+                                    Console.WriteLine();
+                                    displayStudent(students, stuName);
+                                    Console.Write("\nEnter the grade # you would like to delete (not the actual grade) : ");
+                                    int num = Convert.ToInt32(Console.ReadLine());
+                                    deleteStudentGrade(students, stuName, num);
+
+                                    Console.WriteLine("\n\nPress any key to return. . .");
+                                    Console.ReadKey();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\n{0} was not found in the database.");
+                                    continue;
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("\n{0} was not found in the database.");
-                                continue;
-                            }
-                        }
-                        else if (gOption == 2)
-                        {   
-                            Console.Clear();
-                            Console.WriteLine("GRADE MGMT - ADD NEW GRADE\n");
-                            Console.Write("Enter the student's full name : ");
-                            string stuName = Console.ReadLine();
-                            Console.Write("\nEnter the new grade (rounded) : ");
-                            int newGrade = Convert.ToInt32(Console.ReadLine());
-                            addNewGrade(students, stuName, newGrade);
-                            Console.WriteLine();
-                            displayStudent(students, stuName);
-
-                            Console.WriteLine("\n\nPress any key to return. . .");
-                            Console.ReadKey();
-                        }
-                        else if (gOption == 3)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("GRADE MGMT - DELETE A GRADE\n");
-                            Console.Write("Enter the student's full name : ");
-                            string stuName = Console.ReadLine();
-                            if (searchFor(students, stuName))
-                            {
-                                Console.WriteLine();
-                                displayStudent(students, stuName);
-                                Console.Write("\nEnter the grade # you would like to delete (not the actual grade) : ");
-                                int num = Convert.ToInt32(Console.ReadLine());
-                                deleteStudentGrade(students, stuName, num);
-
-                                Console.WriteLine("\n\nPress any key to return. . .");
-                                Console.ReadKey();
+                                goToMain = true;
                             } 
-                            else
-                            {
-                                Console.WriteLine("\n{0} was not found in the database.");
-                                continue;
-                            }
-                        }
-                        else
-                        {
-                            continue;
                         }
                         break;
                     case 4:
