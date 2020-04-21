@@ -487,7 +487,6 @@ namespace Project3
                                 }
                                 else
                                 {
-                                    Console.WriteLine("\n{0} was not found in the database.");
                                     continue;
                                 }
                             }
